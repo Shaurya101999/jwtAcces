@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken')
 
 router.post('/',(req, res) => {
     const ans = decodingJWT(req.headers.token);
+    // const { exp } = JSON.parse(ans);
+    // console.log(exp,'-----------');
     const currTime = Date.now();
     if(ans.iat > currTime){
         return res.send(true);
     }else {
         return res.send(false);
     }
+   
 });
 
 const decodingJWT = (token) => {
